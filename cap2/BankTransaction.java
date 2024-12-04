@@ -1,7 +1,7 @@
 package cap2;
 
 import java.time.LocalDate;
-
+// classe referente ao objeto padrão espero pela entrada das transações de banco. Um exemplo pode ser encontrado junto ao csv.
 public class BankTransaction {
   private final LocalDate date;
   private final double amount;
@@ -32,5 +32,5 @@ public class BankTransaction {
     ", description= " + description + "}";
   }
 
-  
+
 }

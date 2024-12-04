@@ -4,7 +4,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-
+// classe para desacoplar da classe principal a transformação e cálculo quando um csv é passado como parâmetro
+// isso faz com que seja mais fácil passar um json por exemplo.
 public class BankStatementCSVParser {
   private static final DateTimeFormatter DATE_PATTERN = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
