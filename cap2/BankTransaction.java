@@ -1,6 +1,9 @@
 package cap2;
 
 import java.time.LocalDate;
+import java.time.Month;
+import java.util.ArrayList;
+import java.util.List;
 // classe referente ao objeto padrão espero pela entrada das transações de banco. Um exemplo pode ser encontrado junto ao csv.
 public class BankTransaction {
   private final LocalDate date;
@@ -32,5 +35,15 @@ public class BankTransaction {
     ", description= " + description + "}";
   }
 
+  @Override
+  public boolean equals(Object obj) {
+    // TODO Auto-generated method stub
+    return super.equals(obj);
+  }
 
+  @Override
+  public int hashCode() {
+    // TODO Auto-generated method stub
+    return super.hashCode();
+  }
 }
