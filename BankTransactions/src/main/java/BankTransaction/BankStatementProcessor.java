@@ -1,6 +1,7 @@
 package BankTransaction;
 
 import java.time.Month;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BankStatementProcessor {
@@ -37,6 +38,17 @@ public class BankStatementProcessor {
             }
         }
         return total;
+    }
+
+    public List<BankTransaction> getTransitionByValue(final double value) {
+        final List<BankTransaction> transactions = new ArrayList<>();
+
+        for(final BankTransaction bankTransaction : bankTransactions) {
+            if(bankTransaction.getAmount() >= value) {
+                transactions.add(bankTransaction);
+            }
+        }
+        return transactions;
     }
 }
 
