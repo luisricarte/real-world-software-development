@@ -50,5 +50,27 @@ public class BankStatementProcessor {
         }
         return transactions;
     }
+
+    public List<BankTransaction> getTransitionByMonth(final Month month) {
+        final List<BankTransaction> transactions = new ArrayList<>();
+
+        for(final BankTransaction bankTransaction : bankTransactions) {
+            if(bankTransaction.getDate().getMonth() == month) {
+                transactions.add(bankTransaction);
+            }
+        }
+        return transactions;
+    }
+
+    public List<BankTransaction> getTransitionByMonthValue(final Month month, final double value) {
+        final List<BankTransaction> transactions = new ArrayList<>();
+
+        for(final BankTransaction bankTransaction : bankTransactions) {
+            if(bankTransaction.getDate().getMonth() == month && bankTransaction.getAmount() >= value) {
+                transactions.add(bankTransaction);
+            }
+        }
+        return transactions;
+    }
 }
 
