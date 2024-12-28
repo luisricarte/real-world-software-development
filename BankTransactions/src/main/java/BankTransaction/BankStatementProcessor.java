@@ -7,6 +7,7 @@ import java.util.List;
 public class BankStatementProcessor {
 
     private final List<BankTransaction> bankTransactions;
+    private BankTransitionFilter bankTransactionFilter;
 
     public BankStatementProcessor(final List<BankTransaction> bankTransactions) {
         this.bankTransactions = bankTransactions;
@@ -29,7 +30,15 @@ public class BankStatementProcessor {
         }
         return total;
     }
-
+    public List<BankTransaction> findTransactions(final BankTransitionFilter bankTransactionFilter) {
+        final List<BankTransaction> result = new ArrayList<>();
+        for(final BankTransaction bankTransaction : bankTransactions){
+            if(bankTransactionFilter.filterNeeded(bankTransaction)){
+                result.add(bankTransaction);
+            }
+        }
+        return result;
+    }
     public double calculateTotalForCategory(final String category) {
         double total = 0;
         for (final BankTransaction bankTransaction : bankTransactions) {
