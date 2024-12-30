@@ -83,3 +83,13 @@ public class BankStatementProcessor {
     }
 }
 
+class BankTransactionIsInFabruaryAndExpensive implements BankTransitionFilter {
+
+    public boolean filterNeeded(final BankTransaction bankTransaction) {
+        return bankTransaction.getDate().getMonth() == Month.FEBRUARY &&
+                bankTransaction.getAmount() >= 1000;
+    }
+
+
+}
+
