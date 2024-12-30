@@ -5,91 +5,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BankStatementProcessor {
-
     private final List<BankTransaction> bankTransactions;
-    private BankTransitionFilter bankTransactionFilter;
 
     public BankStatementProcessor(final List<BankTransaction> bankTransactions) {
         this.bankTransactions = bankTransactions;
     }
 
-    public double calculateTotalAmount() {
-        double total = 0;
-        for(final BankTransaction bankTransaction : bankTransactions) {
-            total += bankTransaction.getAmount();
-        }
-        return total;
-    }
-
-    public double calculateTotalAmountInMonth(final Month month) {
-        double total = 0;
-        for (final BankTransaction bankTransaction : bankTransactions) {
-            if(month == bankTransaction.getDate().getMonth()){
-                total += bankTransaction.getAmount();
-            }
-        }
-        return total;
-    }
-    public List<BankTransaction> findTransactions(final BankTransitionFilter bankTransactionFilter) {
-        final List<BankTransaction> result = new ArrayList<>();
+    public double summarizeTransactions(final BankTransactionSummarizer bankTransactionSummarizer) {
+        double result = 0;
         for(final BankTransaction bankTransaction : bankTransactions){
-            if(bankTransactionFilter.filterNeeded(bankTransaction)){
+            result = bankTransactionSummarizer.summarize(result,bankTransaction);
+        }
+        return result;
+    }
+    public double calculateTotalInMonth(final Month month) {
+        return summarizeTransactions(((accumulator, bankTransaction) ->
+                bankTransaction.getDate().getMonth() == month ? accumulator + bankTransaction.getAmount() : accumulator));
+    }
+    public List<BankTransaction> findTransactions(final BankTransitionFilter bankTransitionFilter) {
+        final List<BankTransaction> result = new ArrayList<>();
+        for(final BankTransaction bankTransaction : bankTransactions) {
+            if(bankTransitionFilter.test(bankTransaction)){
                 result.add(bankTransaction);
             }
         }
         return result;
     }
-    public double calculateTotalForCategory(final String category) {
-        double total = 0;
-        for (final BankTransaction bankTransaction : bankTransactions) {
-            if(bankTransaction.getDescription().equals(category)){
-                total += bankTransaction.getAmount();
-            }
-        }
-        return total;
+    public List<BankTransaction> findTransitionsGreaterThanEqual(final int amount) {
+        return findTransactions(bankTransaction -> bankTransaction.getAmount() >= amount);
     }
-
-    public List<BankTransaction> getTransitionByValue(final double value) {
-        final List<BankTransaction> transactions = new ArrayList<>();
-
-        for(final BankTransaction bankTransaction : bankTransactions) {
-            if(bankTransaction.getAmount() >= value) {
-                transactions.add(bankTransaction);
-            }
-        }
-        return transactions;
-    }
-
-    public List<BankTransaction> getTransitionByMonth(final Month month) {
-        final List<BankTransaction> transactions = new ArrayList<>();
-
-        for(final BankTransaction bankTransaction : bankTransactions) {
-            if(bankTransaction.getDate().getMonth() == month) {
-                transactions.add(bankTransaction);
-            }
-        }
-        return transactions;
-    }
-
-    public List<BankTransaction> getTransitionByMonthValue(final Month month, final double value) {
-        final List<BankTransaction> transactions = new ArrayList<>();
-
-        for(final BankTransaction bankTransaction : bankTransactions) {
-            if(bankTransaction.getDate().getMonth() == month && bankTransaction.getAmount() >= value) {
-                transactions.add(bankTransaction);
-            }
-        }
-        return transactions;
-    }
-}
-
-class BankTransactionIsInFabruaryAndExpensive implements BankTransitionFilter {
-
-    public boolean filterNeeded(final BankTransaction bankTransaction) {
-        return bankTransaction.getDate().getMonth() == Month.FEBRUARY &&
-                bankTransaction.getAmount() >= 1000;
-    }
-
 
 }
 

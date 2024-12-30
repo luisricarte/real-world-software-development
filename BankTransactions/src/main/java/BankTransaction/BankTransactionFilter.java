@@ -1,6 +1,6 @@
 package BankTransaction;
+
 @FunctionalInterface
-public interface BankTransitionFilter {
+public interface BankTransactionFilter {
     boolean test(BankTransaction bankTransaction);
 }
-

@@ -20,7 +20,7 @@ public class BankStatementCSVParserTest {
     public void shouldParseOneCorrectLine() throws Exception {
         final String line = "30-01-2017,-50,Tesco";
 
-        final BankTransaction result = statementCSVParser.parseFromCSV(line);
+        final BankTransaction result = statementCSVParser.parseFrom(line);
         final BankTransaction expected = new BankTransaction(LocalDate.of(2017, Month.JANUARY, 30), -50, "Tesco");
         final double tolerance = 0.0d;
 
@@ -33,7 +33,7 @@ public class BankStatementCSVParserTest {
     public void shouldParseOneCorrectLineDebit() throws Exception {
         final String line = "31-12-2020,310,Debit";
 
-        final BankTransaction result = statementCSVParser.parseFromCSV(line);
+        final BankTransaction result = statementCSVParser.parseFrom(line);
         final BankTransaction expected = new BankTransaction(LocalDate.of(2020, Month.DECEMBER, 31), 310, "Debit");
         final double tolerance = 0.0d;
 
