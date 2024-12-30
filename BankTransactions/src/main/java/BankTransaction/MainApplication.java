@@ -1,15 +1,14 @@
 package BankTransaction;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Month;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
-//recebe um csv como primeiro argumento e em seguida recebe um mês onde é possível calcular o custo total relacionado ao mês específico
-public class BankTransactionAnalyzerSimpleMonth {
+
+public class MainApplication {
     public static final String RESOURCE = "src/main/resources/";
 
     public static double calculateTotalAmount (final List<BankTransaction> bankTransactions) {
@@ -51,9 +50,4 @@ public class BankTransactionAnalyzerSimpleMonth {
             System.err.println("Could not read the file: " + e.getMessage());
         }
     }
-
 }
-
-
-
-
